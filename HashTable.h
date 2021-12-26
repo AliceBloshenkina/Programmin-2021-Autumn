@@ -9,7 +9,6 @@
 #include <ctime>
 #include <vector>
 
-
 using namespace std;
 
 template<class I, class V>
@@ -53,7 +52,7 @@ public:
                 item = item->next;
             }
 
-            if (item->is_empty == true){ // удалить?? или ремув изменить
+            if (item->is_empty == true){
                 new_ptr->next = item->next;
                 item = new_ptr;
             } else {
@@ -87,8 +86,9 @@ public:
         }
 
         if (item->next == nullptr){ // если в начале и дальше пусто
-            if (table_[i].key == item->key)
+            if (table_[i].key == item->key) {
                 table_.erase(table_.begin() + i);
+            }
             delete item;
             if (item_prev) // конце и дальше пусто
                 item_prev->next = nullptr;
@@ -103,17 +103,26 @@ public:
         }
     };
 
-    V get(I key){
+    const V& get(I key){
         int i = fcnt(key, size_);
         struct HashItem<I, V> *item = &table_[i];
+        V *n = nullptr;
         while (item->key != key){
             if (item->next == nullptr)
-                return (nullptr);
+                return (*n);
             item = item->next;
         }
         return (item->value);
     };
 
+    void printa(int i) {
+        struct HashItem<I, V> *item = &table_[i];
+        while (item) {
+            cout << item->key << " -> ";
+            item = item->next;
+        }
+        cout << endl;
+    }
 };
 
 #endif //LAB2_HASHTABLE_H

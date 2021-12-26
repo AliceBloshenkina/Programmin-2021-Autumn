@@ -26,18 +26,16 @@ public:
         time_life_ = time_life;
     };
 
-    V get(I key){
-        while(!cashe_.empty() && cashe_.front().time_el - clock() >= time_life_){
+    const V& get(I key){
+        while(!cashe_.empty() &&  clock() - cashe_.front().time_el >= time_life_){
             hashtable_.remove(cashe_.front().key);
             cashe_.pop();
         }
-
         return (hashtable_.get(key));
-
     };
 
     void push(I key, V value){
-        while(!cashe_.empty() && cashe_.front().time_el - clock() >= time_life_){
+        while(!cashe_.empty() && clock() - cashe_.front().time_el >= time_life_){
             hashtable_.remove(cashe_.front().key);
             cashe_.pop();
         }
